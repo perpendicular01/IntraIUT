@@ -19,16 +19,27 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    // CREATE Post
-    @PostMapping("/user/{username}/category/{categoryId}")
+    @PostMapping("/user/{email}")
     public ResponseEntity<PostDto> createPost(
             @RequestBody PostDto postDto,
-            @PathVariable String username,
-            @PathVariable Integer categoryId) {
+            @PathVariable("email") String email) {
 
-        PostDto createdPost = this.postService.createPost(postDto, username, categoryId);
+        PostDto createdPost = postService.createPost(postDto, email);
         return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
     }
+  
+
+    // UPDATE Post
+    @PutMapping("/{postId}")
+    public ResponseEntity<PostDto> updatePost(
+            @RequestBody PostDto postDto,
+            @PathVariable Integer postId) {
+
+        PostDto updatedPost = this.postService.updatePost(postDto, postId);
+        return ResponseEntity.ok(updatedPost);
+    }
+
+   
     
     // DELETE Post
     @DeleteMapping("/{postId}")
@@ -36,8 +47,6 @@ public class PostController {
         this.postService.deletePost(postId);
         return ResponseEntity.ok("Post deleted successfully with id: " + postId);
     }
-
-
-
-
 }
+
+
