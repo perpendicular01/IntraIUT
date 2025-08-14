@@ -14,6 +14,7 @@ import com.iut.intraiutserver.services.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 =======
 >>>>>>> Stashed changes
@@ -21,6 +22,11 @@ import org.springframework.stereotype.Service;
 
 
 
+=======
+import org.springframework.stereotype.Service;
+
+
+>>>>>>> Stashed changes
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -52,7 +58,10 @@ public class PostServiceImpl implements PostService {
         Post savedPost = postRepo.save(post);
         return modelMapper.map(savedPost, PostDto.class);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
     }
 
     @Override
@@ -73,6 +82,9 @@ public class PostServiceImpl implements PostService {
         Post post = this.postRepo.findById(postId)
                 .orElseThrow(() -> new ResourceNotFoundException("Post", "post id", postId));
         this.postRepo.delete(post);
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     }
 
