@@ -20,6 +20,7 @@ public class PostController {
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     // Get all posts
     @GetMapping("/")
     public ResponseEntity<List<PostDto>> getAllPosts() {
@@ -28,6 +29,8 @@ public class PostController {
     }
 
 
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
@@ -43,7 +46,10 @@ public class PostController {
     }
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======

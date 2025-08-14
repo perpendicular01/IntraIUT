@@ -15,6 +15,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 =======
 >>>>>>> Stashed changes
@@ -22,6 +23,11 @@ import org.springframework.stereotype.Service;
 
 
 
+=======
+import org.springframework.stereotype.Service;
+
+
+>>>>>>> Stashed changes
 =======
 import org.springframework.stereotype.Service;
 
@@ -59,7 +65,10 @@ public class PostServiceImpl implements PostService {
         return modelMapper.map(savedPost, PostDto.class);
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
     }
@@ -83,6 +92,9 @@ public class PostServiceImpl implements PostService {
                 .orElseThrow(() -> new ResourceNotFoundException("Post", "post id", postId));
         this.postRepo.delete(post);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
