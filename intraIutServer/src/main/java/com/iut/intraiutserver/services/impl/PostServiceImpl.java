@@ -1,9 +1,5 @@
 package com.iut.intraiutserver.services.impl;
 
-<<<<<<< Updated upstream
-public class PostServiceImpl {
-}
-=======
 
 import com.iut.intraiutserver.entities.Category;
 import com.iut.intraiutserver.entities.Post;
@@ -58,18 +54,6 @@ public class PostServiceImpl implements PostService {
         return this.modelMapper.map(newPost, PostDto.class);
     }
 
-    @Override
-    public void deletePost(Integer postId) {
-        Post post = this.postRepo.findById(postId)
-                .orElseThrow(() -> new ResourceNotFoundException("Post", "post id", postId));
-
-        this.postRepo.delete(post);
-    }
-
-
-
-
-
 
 }
->>>>>>> Stashed changes
+
