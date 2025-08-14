@@ -1,4 +1,12 @@
 package com.iut.intraiutserver.services;
 
-public class PostService {
+
+import com.iut.intraiutserver.payloads.PostDto;
+
+import java.util.List;
+
+public interface PostService {
+    PostDto createPost(PostDto postDto, String username, Integer categoryId);
+
+
 }
