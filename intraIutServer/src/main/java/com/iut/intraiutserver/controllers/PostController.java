@@ -1,14 +1,24 @@
 package com.iut.intraiutserver.controllers;
 
+import com.iut.intraiutserver.payloads.PostDto;
+import com.iut.intraiutserver.services.PostService;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/posts")
 public class PostController {
-<<<<<<< Updated upstream
-}
-=======
 
     @Autowired
     private PostService postService;
 
-    // CREATE Post
     @PostMapping("/user/{email}")
     public ResponseEntity<PostDto> createPost(
             @RequestBody PostDto postDto,
@@ -17,24 +27,8 @@ public class PostController {
         PostDto createdPost = postService.createPost(postDto, email);
         return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
     }
+  
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    // Get all posts
-    @GetMapping("/")
-    public ResponseEntity<List<PostDto>> getAllPosts() {
-        List<PostDto> posts = postService.getAllPosts();
-        return new ResponseEntity<>(posts, HttpStatus.OK);
-    }
-
-
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
     // UPDATE Post
     @PutMapping("/{postId}")
     public ResponseEntity<PostDto> updatePost(
@@ -44,16 +38,8 @@ public class PostController {
         PostDto updatedPost = this.postService.updatePost(postDto, postId);
         return ResponseEntity.ok(updatedPost);
     }
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+   
     
     // DELETE Post
     @DeleteMapping("/{postId}")
@@ -61,17 +47,6 @@ public class PostController {
         this.postService.deletePost(postId);
         return ResponseEntity.ok("Post deleted successfully with id: " + postId);
     }
-
-
-
-
-
-
-
-
-<<<<<<< Updated upstream
 }
->>>>>>> Stashed changes
-=======
-}
->>>>>>> Stashed changes
+
+
