@@ -1,12 +1,16 @@
 package com.iut.intraiutserver.services.impl;
 
+
 import com.iut.intraiutserver.entities.User;
+import com.iut.intraiutserver.exceptions.ResourceNotFoundException;
 import com.iut.intraiutserver.payloads.UserDto;
+import com.iut.intraiutserver.repositories.RoleRepo;
 import com.iut.intraiutserver.repositories.UserRepo;
 import com.iut.intraiutserver.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,55 +20,52 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepo userRepo;
-
     @Autowired
     private ModelMapper modelMapper;
 
-    // Create user
+    @Autowired
+    private RoleRepo roleRepo;
+
     @Override
-    public UserDto createUser(UserDto userDto) {
+    public UserDto registerNewUser(UserDto userDto) {
         User user = this.modelMapper.map(userDto, User.class);
-        User savedUser = userRepo.save(user);
-        return this.modelMapper.map(savedUser, UserDto.class);
+        // Encode the password
+
+        User newUser = this.userRepo.save(user);
+        return this.modelMapper.map(newUser, UserDto.class);
     }
 
-    // Update user
     @Override
     public UserDto updateUser(UserDto userDto, Integer userId) {
-        User user = userRepo.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+        User user = this.userRepo.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
 
-        // update fields
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
-        // add other fields here...
+        user.setAbout(userDto.getAbout());
 
-        User updatedUser = userRepo.save(user);
+
+        User updatedUser = this.userRepo.save(user);
         return this.modelMapper.map(updatedUser, UserDto.class);
     }
 
-    // Get user by ID
     @Override
     public UserDto getUserById(Integer userId) {
-        User user = userRepo.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+        User user = this.userRepo.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
         return this.modelMapper.map(user, UserDto.class);
     }
 
-    // Get all users
     @Override
     public List<UserDto> getAllUsers() {
         List<User> users = this.userRepo.findAll();
-        return users.stream()
-                .map(user -> this.modelMapper.map(user, UserDto.class))
-                .collect(Collectors.toList());
+        return users.stream().map(user -> this.modelMapper.map(user, UserDto.class)).collect(Collectors.toList());
     }
 
-    // Delete user
     @Override
     public void deleteUser(Integer userId) {
-        User user = userRepo.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
-        userRepo.delete(user);
+        User user = this.userRepo.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
+        this.userRepo.delete(user);
     }
 }
