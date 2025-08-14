@@ -13,12 +13,13 @@ import com.iut.intraiutserver.repositories.UserRepo;
 import com.iut.intraiutserver.services.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
+
 
 
 @Service
@@ -50,6 +51,29 @@ public class PostServiceImpl implements PostService {
 
         Post savedPost = postRepo.save(post);
         return modelMapper.map(savedPost, PostDto.class);
+<<<<<<< Updated upstream
+=======
+    }
+
+    @Override
+    public PostDto updatePost(PostDto postDto, Integer postId) {
+        Post post = this.postRepo.findById(postId)
+                .orElseThrow(() -> new ResourceNotFoundException("Post", "post id", postId));
+
+        post.setTitle(postDto.getTitle());
+        post.setContent(postDto.getContent());
+        post.setImageName(postDto.getImageName());
+
+        Post updatedPost = this.postRepo.save(post);
+        return this.modelMapper.map(updatedPost, PostDto.class);
+    }
+
+    @Override
+    public void deletePost(Integer postId) {
+        Post post = this.postRepo.findById(postId)
+                .orElseThrow(() -> new ResourceNotFoundException("Post", "post id", postId));
+        this.postRepo.delete(post);
+>>>>>>> Stashed changes
     }
 
 

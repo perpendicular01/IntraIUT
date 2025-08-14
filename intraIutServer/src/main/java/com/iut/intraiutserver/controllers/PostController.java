@@ -18,6 +18,7 @@ public class PostController {
         return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
     }
 
+<<<<<<< Updated upstream
     // Get all posts
     @GetMapping("/")
     public ResponseEntity<List<PostDto>> getAllPosts() {
@@ -26,6 +27,8 @@ public class PostController {
     }
 
 
+=======
+>>>>>>> Stashed changes
     // UPDATE Post
     @PutMapping("/{postId}")
     public ResponseEntity<PostDto> updatePost(
@@ -35,7 +38,10 @@ public class PostController {
         PostDto updatedPost = this.postService.updatePost(postDto, postId);
         return ResponseEntity.ok(updatedPost);
     }
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     
     // DELETE Post
     @DeleteMapping("/{postId}")
