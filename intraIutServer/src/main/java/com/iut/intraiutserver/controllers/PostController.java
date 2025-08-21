@@ -47,6 +47,13 @@ public class PostController {
         this.postService.deletePost(postId);
         return ResponseEntity.ok("Post deleted successfully with id: " + postId);
     }
+
+    // Get all posts
+    @GetMapping("/")
+    public ResponseEntity<List<PostDto>> getAllPosts() {
+        List<PostDto> posts = postService.getAllPosts();
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
 }
 
 

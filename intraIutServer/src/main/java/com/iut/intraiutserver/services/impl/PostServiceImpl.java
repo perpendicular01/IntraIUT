@@ -15,6 +15,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -87,12 +90,15 @@ public class PostServiceImpl implements PostService {
 
 
     @Override
-    public void deletePost(Integer postId) {
-        Post post = this.postRepo.findById(postId)
-                .orElseThrow(() -> new ResourceNotFoundException("Post", "post id", postId));
-
-        this.postRepo.delete(post);
+    public List<PostDto> getAllPosts() {
+        List<Post> posts = postRepo.findAll();
+        return posts.stream()
+                .map(post -> modelMapper.map(post, PostDto.class))
+                .collect(Collectors.toList());
     }
+
+
+
 
     
 
