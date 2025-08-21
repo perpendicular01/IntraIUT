@@ -1,9 +1,10 @@
 package com.iut.intraiutserver.security;
 
+import com.iut.intraiutserver.entities.User;
 import com.iut.intraiutserver.exceptions.ResourceNotFoundException;
 import com.iut.intraiutserver.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,7 +17,7 @@ public class CustomUserDetailService implements UserDetailsService {
     @Autowired
     private UserRepo userRepo;
 
-    // --- THIS IS THE FIX ---
+
     @Override
     @Transactional // This keeps the session open so that the lazy-loaded 'roles' collection can be accessed.
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
