@@ -35,16 +35,16 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDto createPost(PostDto postDto, String userEmail) {
-
-        // Find user by email
         User user = userRepo.findByEmail(userEmail)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "email", userEmail));
 
+        // <-- FIX: FETCH AND ASSIGN THE CATEGORY
+        Category category = this.categoryRepo.findById(postDto.getCategory().getCategoryId())
+                .orElseThrow(() -> new ResourceNotFoundException("Category", "category id", postDto.getCategory().getCategoryId()));
+
         Post post = modelMapper.map(postDto, Post.class);
         post.setUser(user);
-
-        // Skip category assignment
-        // post.setCategory(...);
+        post.setCategory(category); // <-- SET THE CATEGORY ON THE POST
 
         Post savedPost = postRepo.save(post);
         return modelMapper.map(savedPost, PostDto.class);

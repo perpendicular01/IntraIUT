@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.security.Principal; // <-- IMPORT THI
 
 @RestController
 @RequestMapping("/api/posts")
@@ -19,12 +20,13 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    @PostMapping("/user/{email}")
+    // <-- FIX: SECURE ENDPOINT USING PRINCIPAL
+    @PostMapping
     public ResponseEntity<PostDto> createPost(
-            @RequestBody PostDto postDto,
-            @PathVariable("email") String email) {
+            @Valid @RequestBody PostDto postDto,
+            Principal principal) { // Get user identity from the token
 
-        PostDto createdPost = postService.createPost(postDto, email);
+        PostDto createdPost = postService.createPost(postDto, principal.getName());
         return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
     }
   
