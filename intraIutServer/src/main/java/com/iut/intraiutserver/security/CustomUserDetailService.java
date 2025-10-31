@@ -4,7 +4,6 @@ import com.iut.intraiutserver.entities.User;
 import com.iut.intraiutserver.exceptions.ResourceNotFoundException;
 import com.iut.intraiutserver.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

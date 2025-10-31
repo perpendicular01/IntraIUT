@@ -1,6 +1,9 @@
 package com.iut.intraiutserver.controllers;
 
+import com.iut.intraiutserver.config.AppConstants;
+import com.iut.intraiutserver.payloads.ApiResponse;
 import com.iut.intraiutserver.payloads.PostDto;
+import com.iut.intraiutserver.payloads.PostResponse;
 import com.iut.intraiutserver.services.PostService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -14,14 +17,12 @@ import java.util.List;
 import java.security.Principal; // <-- IMPORT THI
 
 @RestController
-@RequestMapping("/api/posts")
+@RequestMapping("/api/v1")
 public class PostController {
 
     @Autowired
     private PostService postService;
 
-    // <-- FIX: SECURE ENDPOINT USING PRINCIPAL
-    @PostMapping
     public ResponseEntity<PostDto> createPost(
             @Valid @RequestBody PostDto postDto,
             Principal principal) { // Get user identity from the token

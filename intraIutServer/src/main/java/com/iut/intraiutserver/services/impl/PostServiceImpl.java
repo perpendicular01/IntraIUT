@@ -5,8 +5,10 @@ import com.iut.intraiutserver.entities.Category;
 import com.iut.intraiutserver.entities.Post;
 import com.iut.intraiutserver.entities.PostStatus;
 import com.iut.intraiutserver.entities.User;
+import com.iut.intraiutserver.exceptions.ApiException;
 import com.iut.intraiutserver.exceptions.ResourceNotFoundException;
 import com.iut.intraiutserver.payloads.PostDto;
+import com.iut.intraiutserver.payloads.PostResponse;
 import com.iut.intraiutserver.repositories.CategoryRepo;
 import com.iut.intraiutserver.repositories.PostRepo;
 import com.iut.intraiutserver.repositories.UserRepo;
@@ -33,7 +35,17 @@ public class PostServiceImpl implements PostService {
 
 
 
+    // --- ADD THIS FULL METHOD IMPLEMENTATION ---
     @Override
+    public PostDto createPost(PostDto postDto, String username, Integer categoryId) {
+        User user = this.userRepo.findByEmail(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "email", username));
+        Category category = this.categoryRepo.findById(categoryId)
+                .orElseThrow(() -> new ResourceNotFoundException("Category", "category id", categoryId));
+        Post post = this.modelMapper.map(postDto, Post.class);
+        post.setImageName("default.png");
+        post.setAddedDate(new Date());
+
     public PostDto createPost(PostDto postDto, String userEmail) {
         User user = userRepo.findByEmail(userEmail)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "email", userEmail));
@@ -79,6 +91,13 @@ public class PostServiceImpl implements PostService {
         return responseDto;
     }
 
+    @Override
+    public PostResponse getPendingPosts(Integer pageNumber, Integer pageSize) {
+        Pageable p = PageRequest.of(pageNumber, pageSize);
+        Page<Post> pagePost = this.postRepo.findByStatus(PostStatus.PENDING, p);
+        return pageToPostResponse(pagePost);
+    }
+
     
 
     @Override
@@ -100,11 +119,35 @@ public class PostServiceImpl implements PostService {
 
 
 
-    
 
 
+    @Override
+    public PostDto approvePost(Integer postId) {
+        Post post = this.postRepo.findById(postId)
+                .orElseThrow(() -> new ResourceNotFoundException("Post", "post id", postId));
+        post.setStatus(PostStatus.APPROVED);
+        Post savedPost = this.postRepo.save(post);
+        return this.modelMapper.map(savedPost, PostDto.class);
+    }
 
+    @Override
+    public PostDto rejectPost(Integer postId) {
+        Post post = this.postRepo.findById(postId)
+                .orElseThrow(() -> new ResourceNotFoundException("Post", "post id", postId));
+        post.setStatus(PostStatus.REJECTED);
+        Post savedPost = this.postRepo.save(post);
+        return this.modelMapper.map(savedPost, PostDto.class);
+    }
 
+    @Override
+    public List<PostDto> getPostsByUsername(String username) {
+        User user = this.userRepo.findByEmail(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "email", username));
+        List<Post> posts = this.postRepo.findByUserOrderByAddedDateDesc(user);
+        return posts.stream()
+                .map(post -> this.modelMapper.map(post, PostDto.class))
+                .collect(Collectors.toList());
+    }
 }
 
 
