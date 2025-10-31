@@ -16,7 +16,7 @@ public class CustomUserDetailService implements UserDetailsService {
     @Autowired
     private UserRepo userRepo;
 
-    // --- THIS IS THE FIX ---
+
     @Override
     @Transactional // This keeps the session open so that the lazy-loaded 'roles' collection can be accessed.
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
