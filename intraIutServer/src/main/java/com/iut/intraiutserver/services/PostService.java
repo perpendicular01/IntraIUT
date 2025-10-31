@@ -7,7 +7,7 @@ import com.iut.intraiutserver.payloads.PostResponse;
 import java.util.List;
 
 public interface PostService {
-
+    PostDto createPost(PostDto postDto, String username, Integer categoryId);
     PostDto updatePost(PostDto postDto, Integer postId);
     void deletePost(Integer postId);
     PostResponse getAllPost(Integer pageNumber, Integer pageSize, String sortBy, String sortDir);
@@ -22,12 +22,4 @@ public interface PostService {
 
     // The required method signature
     PostDto updatePostImage(Integer postId, String imageName);
-
-    PostDto createPost(PostDto postDto, String userEmail);
-    PostDto updatePost(PostDto postDto, Integer postId);
-    void deletePost(Integer postId);
-    List<PostDto> getAllPosts();
-
 }
-
-
